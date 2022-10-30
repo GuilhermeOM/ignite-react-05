@@ -1,1 +1,44 @@
-// TODO
+.home_post_container {
+  margin: 3rem auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  width: fit-content;
+
+  h1 {
+    padding: 0.5rem 0;
+    color: var(--white-200);
+    cursor: pointer;
+    transition: filter 0.2s;
+
+    &:hover {
+      filter: brightness(0.7);
+    }
+  }
+
+  .home_post_extra_info {
+    margin-top: 1rem;
+    display: flex;
+    gap: 2rem;
+    font-size: 14px;
+    color: var(--gray-600);
+
+    .home_post_extra_info_block {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+  }
+}
+
+.home_load_posts {
+  width: fit-content;
+  font-size: 18px;
+  color: var(--pink-600);
+  cursor: pointer;
+  transition: filter 0.2s;
+
+  &:hover {
+    filter: brightness(0.7);
+  }
+}

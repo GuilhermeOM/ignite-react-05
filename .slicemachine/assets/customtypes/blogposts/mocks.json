@@ -1,0 +1,39 @@
+{
+  "id": "mock-doc-id",
+  "url": null,
+  "type": "blogposts",
+  "href": null,
+  "tags": [],
+  "first_publication_date": "1970-01-01T00:00:01+0000",
+  "last_publication_date": "1970-01-01T00:00:01+0000",
+  "slugs": [],
+  "linked_documents": [],
+  "lang": "en-us",
+  "alternate_languages": [],
+  "data": {
+    "title": "ice",
+    "subtitle": "aside",
+    "author": "gate",
+    "banner": {
+      "dimensions": {
+        "width": 900,
+        "height": 500
+      },
+      "alt": null,
+      "copyright": null,
+      "url": "https://images.unsplash.com/photo-1593642532973-d31b6557fa68"
+    },
+    "content": [
+      {
+        "header": "layers",
+        "body": [
+          {
+            "type": "paragraph",
+            "text": "Excepteur id est labore velit consectetur amet duis. Cillum dolore aute elit incididunt qui minim qui.",
+            "spans": []
+          }
+        ]
+      }
+    ]
+  }
+}
