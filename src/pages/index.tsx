@@ -2,7 +2,7 @@ import { format } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 
 import { GetStaticProps } from 'next';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { getPrismicClient } from '../services/prismic';
 
@@ -11,6 +11,7 @@ import styles from './home.module.scss';
 import Link from 'next/link';
 import Image from 'next/image';
 import Header from '../components/Header';
+import { Centralizer } from '../components/Centralizer';
 
 interface Post {
   uid?: string;
@@ -32,8 +33,23 @@ interface HomeProps {
 }
 
 export default function Home({ postsPagination }: HomeProps) {
-  const [pagination, setPagination] = useState(1);
+  const [pagination, setPagination] = useState(2);
   const [maxContent, setMaxContent] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (postsPagination.results.length <= pagination) {
+      setMaxContent(true);
+    }
+  }, [postsPagination])
+
+  useEffect(() => {
+    if (postsPagination !== null && postsPagination !== undefined) {
+      setIsLoading(false);
+    } else {
+      setIsLoading(true);
+    }
+  }, [postsPagination]);
 
   function handlePagination() {
     if (pagination < postsPagination.results.length) {
@@ -47,52 +63,62 @@ export default function Home({ postsPagination }: HomeProps) {
 
   return (
     <div className={styles.home_container}>
-      <div className={styles.home_post_container}>
-        <Header />
-        {postsPagination.results.map((post, i) => {
-          if (i < pagination) {
-            return (
-              <div className={styles.home_post} key={post.uid}>
-                <Link href={`/post/${post.uid}`}>
-                  <h1 onClick={() => console.log('click')}>
-                    {post.data.title}
-                  </h1>
-                </Link>
-                <p>{post.data.subtitle}</p>
-                <div className={styles.home_post_extra_info}>
-                  <div className={styles.home_post_extra_info_block}>
-                    <Image
-                      src="/images/icon_calendar.svg"
-                      width={20}
-                      height={20}
-                    />
-                    <p>
-                      {format(
-                        new Date(post.first_publication_date),
-                        'd MMM yyyy',
-                        {
-                          locale: ptBR,
-                        }
-                      )}
-                    </p>
+      <Centralizer>
+        <div className={styles.home_post_container}>
+          <Header />
+          {isLoading ? (
+            <h1>Carregando...</h1>
+          ) : (
+            postsPagination.results.map((post, i) => {
+              if (i < pagination) {
+                return (
+                  <div className={styles.home_post} key={post.uid}>
+                    <Link href={`/post/${post.uid}`}>
+                      <h1 onClick={() => console.log('click')}>
+                        {post.data.title}
+                      </h1>
+                    </Link>
+                    <p>{post.data.subtitle}</p>
+                    <div className={styles.home_post_extra_info}>
+                      <div className={styles.home_post_extra_info_block}>
+                        <Image
+                          src="/images/icon_calendar.svg"
+                          width={20}
+                          height={20}
+                        />
+                        <p>
+                          {format(
+                            new Date(post.first_publication_date),
+                            'd MMM yyyy',
+                            {
+                              locale: ptBR,
+                            }
+                          )}
+                        </p>
+                      </div>
+                      <div className={styles.home_post_extra_info_block}>
+                        <Image
+                          src="/images/icon_user.svg"
+                          width={20}
+                          height={20}
+                        />
+                        <p>{post.data.author}</p>
+                      </div>
+                    </div>
                   </div>
-                  <div className={styles.home_post_extra_info_block}>
-                    <Image src="/images/icon_user.svg" width={20} height={20} />
-                    <p>{post.data.author}</p>
-                  </div>
-                </div>
-              </div>
-            );
-          }
-        })}
-        {!maxContent ? (
-          <h3 className={styles.home_load_posts} onClick={handlePagination}>
-            Carregar mais posts
-          </h3>
-        ) : (
-          <></>
-        )}
-      </div>
+                );
+              }
+            })
+          )}
+          {!maxContent ? (
+            <h3 className={styles.home_load_posts} onClick={handlePagination}>
+              Carregar mais posts
+            </h3>
+          ) : (
+            <></>
+          )}
+        </div>
+      </Centralizer>
     </div>
   );
 }

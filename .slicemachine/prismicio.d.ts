@@ -70,15 +70,15 @@ interface BlogpostsDocumentData {
  */
 export interface BlogpostsDocumentDataContentItem {
     /**
-     * header field in *Post → content*
+     * heading field in *Post → content*
      *
      * - **Field Type**: Text
      * - **Placeholder**: *None*
-     * - **API ID Path**: blogposts.content[].header
+     * - **API ID Path**: blogposts.content[].heading
      * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
      *
      */
-    header: prismicT.KeyTextField;
+    heading: prismicT.KeyTextField;
     /**
      * body field in *Post → content*
      *
